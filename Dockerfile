@@ -44,5 +44,16 @@ COPY config/db-setup.exp tmp/
 
 EXPOSE 80
 
+# ################ debug php ###################
+# COPY debug/phpinfo /var/www/localhost/htdocs
+# RUN rm /etc/apache2/conf.d/vhosts.conf; \
+#     rm /var/www/localhost/htdocs/index.html
+# ##############################################
+
+# ########## run craft server check ############
+# COPY debug/server /var/www/localhost/htdocs
+# RUN php /var/www/localhost/htdocs/checkit.php
+# ##############################################
+
 # start apache in foreground
 CMD /usr/sbin/httpd -D FOREGROUND
