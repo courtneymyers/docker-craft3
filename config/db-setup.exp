@@ -1,0 +1,13 @@
+#!/usr/bin/expect
+
+spawn /var/www/html/craft setup
+expect {
+  "Which database driver are you using?" { send "mysql\n"; exp_continue; }
+  "Database server name or IP address:" { send "\n"; exp_continue; }
+  "Database port:" { send "\n"; exp_continue; }
+  "Database username:" { send "\n"; exp_continue; }
+  "Database password:" { send "secret\n"; exp_continue; }
+  "Database name:" { send "craft\n"; exp_continue; }
+  "Database table prefix:" { send "\n"; exp_continue; }
+}
+expect eof
