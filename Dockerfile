@@ -1,60 +1,61 @@
-FROM php:7.2-fpm-alpine3.7
+FROM alpine:3.7
 
 LABEL maintainer="Courtney Myers <courtney.myers@erg.com>" \
       description="Minimal PHP 7.2 and Apache 2 for Craft CMS" \
       vesion="1.0"
 
+# install apache, php, php extensions for craft, and other utilities
 RUN apk add --no-cache \
-    # install apache
     apache2 \
-    # install required php extensions for craft
+    php7 \
     php7-apache2 \
+    php7-phar \
+    php7-zlib \
+    php7-ctype \
+    php7-session \
+    php7-fileinfo \
+    # required php extensions for craft
+    php7-pdo \
+    php7-pdo_mysql \
+    php7-gd \
+    php7-openssl \
     php7-mbstring \
-    # install expect for passing arguments to craft setup script's prompts
-    expect \
-    # install dependencies of php extension zip
-    zlib-dev; \
+    php7-json \
+    php7-curl \
+    php7-zip \
+    # optional extensions for craft
+    php7-iconv \
+    php7-intl \
+    php7-dom \
+    # expect for passing arguments to craft setup script's prompts
+    expect;
+
+# install composer, craft, and configure apache
+RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"; \
+    php composer-setup.php; \
+    rm composer-setup.php; \
+    mv composer.phar /usr/bin/composer; \
+    # install craft
+    composer create-project --stability RC craftcms/craft /srv/www; \
     # create missing apache2 run directory
     mkdir -p /run/apache2; \
-    # install required php extensions for composer and craft
-    docker-php-ext-install zip; \
-    docker-php-ext-install pdo_mysql; \
-    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"; \
-    php composer-setup.php --install-dir=/usr/local/bin --filename=composer; \
-    php -r "unlink('composer-setup.php');"
+    # set server root permissions
+    chown -R apache:apache /srv/www;
 
-# install imagemagick php extension for craft
-RUN apk add --no-cache --virtual .phpize-deps $PHPIZE_DEPS imagemagick-dev libtool; \
-    export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS"; \
-    pecl install imagick-3.4.3; \
-    docker-php-ext-enable imagick; \
-    apk add --no-cache --virtual .imagick-runtime-deps imagemagick; \
-    apk del .phpize-deps;
+# ########################## run craft server check ############################
+# RUN php /src/www/vendor/craftcms/server-check/server/checkit.php
+# ##############################################################################
 
-# install craft
-RUN composer create-project --stability RC craftcms/craft .
+# copy over config files
+COPY config/ tmp/
 
-# configure apache virtual hosts, php settings, and server root permissions
-COPY config/vhosts.conf /etc/apache2/conf.d/
-COPY config/php.ini /usr/local/etc/php
-RUN chown -R apache:apache /var/www
-
-# setup craft
-COPY config/db-setup.exp tmp/
-# RUN expect tmp/db-setup.exp; rm -rf tmp/
+# configure virtual hosts, php settings, and run craft setup script
+RUN mv tmp/vhosts.conf /etc/apache2/conf.d/; \
+    mv tmp/php.ini /etc/php7/conf.d;
+    # expect tmp/db-setup.exp; \
+    # rm -rf tmp/;
 
 EXPOSE 80
-
-# ################ debug php ###################
-# COPY debug/phpinfo /var/www/localhost/htdocs
-# RUN rm /etc/apache2/conf.d/vhosts.conf; \
-#     rm /var/www/localhost/htdocs/index.html
-# ##############################################
-
-# ########## run craft server check ############
-# COPY debug/server /var/www/localhost/htdocs
-# RUN php /var/www/localhost/htdocs/checkit.php
-# ##############################################
 
 # start apache in foreground
 CMD /usr/sbin/httpd -D FOREGROUND
