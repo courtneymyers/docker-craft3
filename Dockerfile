@@ -43,7 +43,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"; \
     chown -R apache:apache /srv/www;
 
 # ########################## run craft server check ############################
-# RUN php /src/www/vendor/craftcms/server-check/server/checkit.php
+# RUN php /srv/www/vendor/craftcms/server-check/server/checkit.php
 # ##############################################################################
 
 # copy over config files
