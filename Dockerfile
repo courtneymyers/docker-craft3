@@ -40,7 +40,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"; \
     # create missing apache2 run directory
     mkdir -p /run/apache2; \
     # set server root permissions
-    chown -R apache:apache /srv/www;
+    chown -R apache /srv/www;
 
 # copy over config files
 COPY config/ tmp/
