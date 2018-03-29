@@ -42,20 +42,14 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"; \
     # set server root permissions
     chown -R apache:apache /srv/www;
 
-# ########################## run craft server check ############################
-# RUN php /srv/www/vendor/craftcms/server-check/server/checkit.php
-# ##############################################################################
-
 # copy over config files
 COPY config/ tmp/
 
 # configure virtual hosts, php settings, and run craft setup script
 RUN mv tmp/vhosts.conf /etc/apache2/conf.d/; \
     mv tmp/php.ini /etc/php7/conf.d;
-    # expect tmp/db-setup.exp; \
-    # rm -rf tmp/;
 
 EXPOSE 80
 
-# start apache in foreground
-CMD /usr/sbin/httpd -D FOREGROUND
+# run craft setup and start apache in foreground
+CMD /bin/sh tmp/start.sh
