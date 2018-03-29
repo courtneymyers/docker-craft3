@@ -38,9 +38,7 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"; \
     # install craft
     composer create-project --stability RC craftcms/craft /srv/www; \
     # create missing apache2 run directory
-    mkdir -p /run/apache2; \
-    # set server root permissions
-    chown -R apache /srv/www;
+    mkdir -p /run/apache2;
 
 # copy over config files
 COPY config/ tmp/
