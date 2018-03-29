@@ -1,7 +1,7 @@
 FROM alpine:3.7
 
 LABEL maintainer="Courtney Myers <courtney.myers@erg.com>" \
-      description="Minimal PHP 7.2 and Apache 2 for Craft CMS" \
+      description="Minimal PHP 7.1 and Apache 2 for Craft CMS" \
       vesion="1.0"
 
 # install apache, php, php extensions for craft, and other utilities
