@@ -8,13 +8,16 @@ Optionally pull the MariaDB image from Docker Hub as well (not required, as itâ€
 `docker pull mariadb:10.3`)
 
 2. Set environment variables for the database, and Craft in the following files:    
-  - `env/.craft.env`    
+  - `env/.craft.env` (`CRAFT_PASSWORD` must be at least 6 digits long)    
   - `env/.mysql.env`    
 
-  **NOTE:** `CRAFT_PASSWORD` must be at least 6 digits long.
+3. Run setup script:    
+`sh setup.sh`
 
-3. Start the Craft 3 and MariaDB containers in detached mode:    
-`docker run --name craft-db --env-file ./env/.mysql.env -d mariadb:10.3`    
-`docker run --name craft-cms --env-file ./env/.craft.env --link craft-db:db -p 8000:80 -d craft:3`
+4. When done with local development, stop each container individually:    
+`docker container stop craft-db`
+`docker container stop craft-cms`
 
-4. Access the app in a web browser at `http://localhost:8000/admin`
+And to resume a later point:
+`docker container start craft-db`
+`docker container start craft-cms`
