@@ -41,6 +41,7 @@ docker run \
   craft:3;
 
 sleep 15;
+
 echo '\nRestarting apache on craft-cms container...';
 docker exec -it --detach craft-cms sh -c "/usr/sbin/httpd -D FOREGROUND";
 
