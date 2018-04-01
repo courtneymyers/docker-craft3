@@ -1,10 +1,10 @@
 #!/bin/sh
 
 echo '\nCleaning up previous setup...';
-docker container rm --force craft-db
-docker container rm --force craft-cms
-docker volume rm craftdb
-rm -rf ./www
+docker container rm --force craft-db;
+docker container rm --force craft-cms;
+docker volume rm craftdb;
+rm -rf ./www;
 
 echo '\nBringing up containers...';
 docker run \
@@ -20,7 +20,7 @@ docker run \
   --link craft-db:db \
   --publish 8000:80 \
   --detach \
-  craft:3;
+  myerscourtney/craft3:1.0;
 
 sleep 15;
 
@@ -38,7 +38,7 @@ docker run \
   --link craft-db:db \
   --publish 8000:80 \
   --detach \
-  craft:3;
+  myerscourtney/craft3:1.0;
 
 sleep 15;
 
