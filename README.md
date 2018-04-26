@@ -11,8 +11,8 @@
     `docker pull mariadb:10.3`    
 
 2. Set environment variables for the database, and Craft in the following files:    
-    `env/.craft.env` (`CRAFT_PASSWORD` must be at least 6 digits long)    
-    `env/.mysql.env`    
+    Duplicate `env/.craft.env.example` as `env/.craft.env` (`CRAFT_PASSWORD` must be at least 6 digits long)    
+    Duplicate `env/.mysql.env.example` as `env/.mysql.env`    
 
 3. Run setup script:    
     `sh setup.sh`    
