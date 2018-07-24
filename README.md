@@ -7,7 +7,7 @@
     or download it from [Docker Hub](https://hub.docker.com/r/courtneymyers/craft3):    
     `docker pull courtneymyers/craft3:1.0`    
 
-    Optionally download the MariaDB image from Docker Hub as well (not required, as it’ll get pulled in step 3, if you don't already have it locally):    
+    Optionally download the MariaDB image from [Docker Hub](https://hub.docker.com/_/mariadb) as well (not required, as it’ll get pulled in step 3, if you don't already have it locally):    
     `docker pull mariadb:10.3`    
 
 2. Set environment variables for the database, and Craft in the following files:    
