@@ -5,7 +5,7 @@
 1. Build the Craft 3 image locally from the Dockerfile:    
     `docker build -t courtneymyers/craft3 .`    
     or download it from [Docker Hub](https://hub.docker.com/r/courtneymyers/craft3):    
-    `docker pull courtneymyers/craft3:1.0`    
+    `docker pull courtneymyers/craft3:latest`    
 
     Optionally download the MariaDB image from [Docker Hub](https://hub.docker.com/_/mariadb) as well (not required, as it’ll get pulled in step 3, if you don't already have it locally):    
     `docker pull mariadb:10.3`    

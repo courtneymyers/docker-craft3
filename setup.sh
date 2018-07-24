@@ -20,7 +20,7 @@ docker run \
   --link craft-db:db \
   --publish 8000:80 \
   --detach \
-  courtneymyers/craft3:1.0;
+  courtneymyers/craft3:latest;
 
 sleep 15;
 
@@ -38,7 +38,7 @@ docker run \
   --link craft-db:db \
   --publish 8000:80 \
   --detach \
-  courtneymyers/craft3:1.0;
+  courtneymyers/craft3:latest;
 
 sleep 15;
 
